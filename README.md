@@ -34,6 +34,7 @@ dotnet restore
 ### 3. Run the project
 
 ```bash
+cd BlazoriseOutlookClone
 dotnet run
 ```
 
