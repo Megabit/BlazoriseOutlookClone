@@ -1,0 +1,126 @@
+﻿@page "/calendar"
+<Row>
+    <Column>
+        <TopBarMenu>
+            <NewItemContent>
+                <Dropdown RightAligned>
+                    <Button Color="Color.Primary" Display="Display.InlineBlock">
+                        <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.Calendar" IconStyle="IconStyle.Regular" Margin="Margin.Is2" />
+                        <Span>New event</Span>
+                    </Button>
+                    <DropdownToggle Color="Color.Primary" Split />
+                    <DropdownMenu>
+                        <DropdownItem>
+                            <Icon Name="IconName.MailOpen" IconSize="IconSize.Large" />
+                            Mail
+                        </DropdownItem>
+                        <DropdownItem>
+                            <Icon Name="IconName.Calendar" />Event
+                        </DropdownItem>
+                        <DropdownItem>
+                            <Icon Name="IconName.Users" />Group
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </NewItemContent>
+            <HomeContent>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.CalendarDay">Day</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.CalendarWorkWeek">Work week</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.CalendarWeekNumbers">Week</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.CalendarMonth">Month</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.SplitVertical">Split view</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Filter">Filter applied</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Share" IconColor="TextColor.Primary">Share</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Print">Print</TopBarButton>
+            </HomeContent>
+            <ViewContent>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.CalendarDay">Day</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.CalendarWorkWeek">Work week</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.CalendarWeekNumbers">Week</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Save" IconColor="@("purple")">Saved views</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.SplitVertical">Split view</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Filter">Filter applied</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Settings" IconColor="TextColor.Primary">Calendar settings</TopBarButton>
+            </ViewContent>
+            <HelpContent>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Question" IconColor="TextColor.Warning">Help</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Lightbulb" IconColor="TextColor.Primary">Tips</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.PersonFeedback" IconColor="TextColor.Success">Feedback</TopBarButton>
+            </HelpContent>
+        </TopBarMenu>
+    </Column>
+</Row>
+<Row>
+    <Column ColumnSize="ColumnSize.Is2" Flex="Flex.Column">
+        <Div Flex="Flex.Column">
+            <SideBarMenu>
+                <SideBarGroup Caption="My calendars">
+                    <SideBarCheck Name="Calendar" />
+                    <SideBarCheck Name="United States holidays" />
+                    <SideBarCheck Name="Birthdays" />
+                </SideBarGroup>
+            </SideBarMenu>
+        </Div>
+        @* <DatePicker TValue="DateTime?" Inline /> *@
+    </Column>
+    <Column>
+        <Scheduler TItem="Appointment" @bind-Date="@selectedDate"
+                   Data="@Appointments"
+                   @bind-SelectedView="@selectedView">
+            <SchedulerToolbar />
+            <SchedulerViews>
+                <SchedulerWeekView StartTime="@startTime" EndTime="@endTime" WorkDayStart="@workDayStart" WorkDayEnd="@workDayEnd" />
+            </SchedulerViews>
+        </Scheduler>
+        @code {
+            private DateOnly selectedDate = DateOnly.FromDateTime( DateTime.Today );
+            private SchedulerView selectedView = SchedulerView.Week;
+            private static DateTime today10AM = DateTime.Today.AddHours( 10 );
+            private TimeOnly startTime = new TimeOnly( 7, 0 );
+            private TimeOnly endTime = new TimeOnly( 17, 0 );
+            private TimeOnly workDayStart = new TimeOnly( 8, 0 );
+            private TimeOnly workDayEnd = new TimeOnly( 16, 0 );
+
+            public class Appointment
+            {
+                public Appointment()
+                {
+                }
+
+                public Appointment( string title, string description, DateTime start, DateTime end, bool allDay = false )
+                {
+                    Id = Guid.NewGuid().ToString();
+                    Title = title;
+                    Description = description;
+                    Start = start;
+                    End = end;
+                    AllDay = allDay;
+                }
+
+                public string Id { get; set; }
+
+                public string Title { get; set; }
+
+                public string Description { get; set; }
+
+                public DateTime Start { get; set; }
+
+                public DateTime End { get; set; }
+
+                public bool AllDay { get; set; }
+
+                public string RecurrenceRule { get; set; }
+            }
+
+            List<Appointment> Appointments = new List<Appointment>
+                {
+                new Appointment( "Meeting with the CEO", "Regarding the new margeting strategy", today10AM, today10AM.AddHours(1) ),
+                new Appointment( "Some other meeting", "Regarding the new margeting strategy", today10AM, today10AM.AddHours(1) ),
+                new Appointment( "Lunch with the team", "Discussing the new project", today10AM.AddDays(-10).AddHours(2), today10AM.AddDays(-10).AddHours(3))
+                {
+                RecurrenceRule = "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;INTERVAL=2;COUNT=3"
+                },
+                };
+        }
+    </Column>
+</Row>

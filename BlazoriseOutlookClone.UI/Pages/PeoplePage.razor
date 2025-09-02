@@ -1,0 +1,42 @@
+﻿@page "/people"
+<Row>
+    <Column>
+        <TopBarMenu>
+            <NewItemContent>
+                <Dropdown RightAligned>
+                    <Button Color="Color.Primary" Display="Display.InlineBlock">
+                        <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.Calendar" IconStyle="IconStyle.Regular" Margin="Margin.Is2" />
+                        <Span>New contact</Span>
+                    </Button>
+                    <DropdownToggle Color="Color.Primary" Split />
+                    <DropdownMenu>
+                        <DropdownItem>
+                            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.PersonAdd" IconSize="IconSize.Large" />
+                            New contact
+                        </DropdownItem>
+                        <DropdownItem>
+                            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.PeopleAdd" IconSize="IconSize.Large" />
+                            New contact list
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </NewItemContent>
+            <HomeContent>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Edit" IconColor="TextColor.Primary">Edit</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Delete">Delete</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowUndo" IconColor="TextColor.Primary">Restore</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.PersonAdd" IconColor="TextColor.Success">Add to contacts</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.StarAdd" IconColor="TextColor.Success">Add to favorites</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.PeopleList">Add to list</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.PeopleTeamAdd" IconColor="TextColor.Success">Add members</TopBarButton>
+            </HomeContent>
+            <ViewContent>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Settings" IconColor="TextColor.Primary">People settings</TopBarButton>
+            </ViewContent>
+            <HelpContent>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Question" IconColor="TextColor.Warning">Help</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.PersonFeedback" IconColor="TextColor.Success">Feedback</TopBarButton>
+            </HelpContent>
+        </TopBarMenu>
+    </Column>
+</Row>

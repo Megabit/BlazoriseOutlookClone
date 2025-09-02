@@ -1,0 +1,68 @@
+﻿<Card Margin="Margin.Is2.FromBottom">
+    <CardBody Padding="Padding.Is0.FromBottom">
+        <Heading Size="HeadingSize.Is5">@Subject</Heading>
+    </CardBody>
+</Card>
+
+<Card>
+    <CardBody Border="Border.Is1.OnBottom" Flex="Flex.Default.NoWrap">
+        <Div Width="Width.Rem( 2.5 )" Height="Height.Rem( 2.5 )" Border="Border.RoundedCircle" Flex="Flex.AlignItems.Center.JustifyContent.Center.Shrink.Is0" Background="@InitialsBackground" TextColor="TextColor.White" TextWeight="TextWeight.SemiBold">
+            @FromInitials
+        </Div>
+        <Row Width="Width.Is100" Padding="Padding.Is3.FromStart">
+            <Column Overflow="Overflow.Hidden">
+                <Div Margin="Margin.Is2.FromBottom">
+                    @FullEmail
+                </Div>
+                <Div>
+                    <Span TextWeight="@(!IsRead ? TextWeight.Bold : TextWeight.Default)" TextColor="@(!IsRead ? TextColor.Primary : null)">
+                        <Span> To:</Span>
+                        <Badge Color="Color.Light" CloseClicked="@(() => Task.CompletedTask)" Pill Gap="Gap.Is1">john.dome@@blazorise.com</Badge>
+                    </Span>
+                </Div>
+            </Column>
+            <Column TextAlignment="TextAlignment.End">
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowReply" IconColor="@("purple")">Reply</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowReplyAll" IconColor="@("purple")">Reply All</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowForward" IconColor="TextColor.Primary">Forward</TopBarButton>
+            </Column>
+        </Row>
+    </CardBody>
+    <CardBody Border="Border.Is1.OnBottom" Background="Background.Secondary" Flex="Flex.JustifyContent.Between.AlignItems.Center">
+        <Span Flex="Flex.Default">
+            <Icon Name="IconName.Info" IconSize="IconSize.Large" Margin="Margin.Is2.FromEnd" />
+            Some content in this message has been blocked because the sender isn't in your Safe senders list.
+        </Span>
+        <Div>
+            <Button Size="Size.Small">Trust sender</Button>
+            <Button Size="Size.Small">Show blocked content</Button>
+        </Div>
+    </CardBody>
+    <CardBody Height="Height.Px( 600 )" Overflow="Overflow.Scroll">
+        @((MarkupString)Body)
+    </CardBody>
+</Card>
+@code {
+    string FullEmail => string.IsNullOrWhiteSpace( FromEmail ) ? FromName : $"{FromName} <{FromEmail}>";
+
+    string FromInitials => string.IsNullOrWhiteSpace( FromName ) ? "?" : new string( FromName.Split( ' ', StringSplitOptions.RemoveEmptyEntries ).Select( x => x[0] ).Take( 2 ).ToArray() ).ToUpperInvariant();
+
+    Background InitialsBackground => FromInitials switch
+    {
+        "A" or "B" or "C" or "D" or "E" or "F" => Background.Danger,
+        "G" or "H" or "I" or "J" or "K" or "L" => Background.Warning,
+        "M" or "N" or "O" or "P" or "Q" or "R" => Background.Success,
+        "S" or "T" or "U" or "V" or "W" => Background.Info,
+        _ => Background.Primary,
+    };
+
+    [Parameter] public string FromName { get; set; }
+
+    [Parameter] public string FromEmail { get; set; }
+
+    [Parameter] public string Subject { get; set; }
+
+    [Parameter] public bool IsRead { get; set; }
+
+    [Parameter] public string Body { get; set; }
+}

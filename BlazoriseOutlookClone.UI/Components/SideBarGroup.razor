@@ -1,0 +1,26 @@
+﻿<Div TextWeight="TextWeight.SemiBold" TextSize="TextSize.Medium" Padding="Padding.Is3.OnY.Is0.OnX" Style="cursor: pointer" @onclick="@ToggleExpand">
+    <Icon Name="@ToggleIcon" IconStyle="IconStyle.Regular" IconSize="IconSize.Large" Margin="Margin.Is2" />
+    <Span>@Caption</Span>
+</Div>
+
+@if ( isExpanded )
+{
+    @ChildContent
+}
+
+@code {
+    object ToggleIcon => isExpanded ? Blazorise.Icons.FluentUI.FluentUIIcons.ChevronDown : Blazorise.Icons.FluentUI.FluentUIIcons.ChevronRight;
+
+    bool isExpanded = true;
+
+    Task ToggleExpand()
+    {
+        isExpanded = !isExpanded;
+
+        return Task.CompletedTask;
+    }
+
+    [Parameter] public string Caption { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}

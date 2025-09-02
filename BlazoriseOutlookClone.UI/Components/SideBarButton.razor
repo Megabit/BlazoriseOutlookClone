@@ -1,0 +1,18 @@
+﻿<Button Flex="Flex.JustifyContent.Start.AlignItems.Center" Border="Border.Is0" TextAlignment="TextAlignment.Start" TextWeight="TextWeight.Normal" Padding="Padding.Is0.OnY.Is4.FromStart">
+    <Span Width="Width.Is100" Flex="Flex.InlineFlex.AlignItems.Center">
+        <Icon Name="@IconName" IconStyle="IconStyle.Regular" IconSize="IconSize.Large" Margin="Margin.Is2" />
+        <Span>@Name</Span>
+        @if ( UnreadCount > 0 )
+        {
+            <Span TextColor="TextColor.Primary" TextWeight="TextWeight.Bold" Margin="Margin.IsAuto.FromStart">@UnreadCount</Span>
+        }
+    </Span>
+</Button>
+
+@code {
+    [Parameter] public object IconName { get; set; }
+
+    [Parameter] public string Name { get; set; }
+
+    [Parameter] public int UnreadCount { get; set; }
+}

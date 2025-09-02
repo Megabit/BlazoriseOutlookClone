@@ -1,0 +1,65 @@
+﻿<Div Flex="Flex.Default.JustifyContent.Start.AlignItems.Center" Height="Height.Rem( 2 )">
+    <Div Padding="Padding.Is3" Display="Display.InlineBlock">
+        <Span Flex="Flex.AlignItems.Center.JustifyContent.Center.NoWrap" Height="Height.Is100">
+            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.NavigationFilled" IconSize="IconSize.Large" />
+        </Span>
+    </Div>
+    <Tabs @bind-SelectedTab="@selectedTopMenu">
+        <Items>
+            @if ( HomeContent != null )
+            {
+                <Tab Name="home">Home</Tab>
+            }
+            @if ( ViewContent != null )
+            {
+                <Tab Name="view">View</Tab>
+            }
+            @if ( HelpContent != null )
+            {
+                <Tab Name="help">Help</Tab>
+            }
+        </Items>
+    </Tabs>
+</Div>
+<TabsContent SelectedPanel="@selectedTopMenu" Shadow="Shadow.Small" Padding="Padding.Is1" Margin="Margin.Is2.FromTop">
+    @if ( HomeContent != null )
+    {
+        <TabPanel Name="home" Padding="Padding.Is1">
+            @if ( NewItemContent != null )
+            {
+                @NewItemContent
+            }
+            <Div Gap="Gap.Is3" Display="Display.InlineBlock">
+                @HomeContent
+            </Div>
+        </TabPanel>
+    }
+    @if ( ViewContent != null )
+    {
+        <TabPanel Name="view" Padding="Padding.Is1">
+            <Div Gap="Gap.Is3" Display="Display.InlineBlock">
+                @ViewContent
+            </Div>
+        </TabPanel>
+    }
+    @if ( HelpContent != null )
+    {
+        <TabPanel Name="help" Padding="Padding.Is1">
+            <Div Gap="Gap.Is3" Display="Display.InlineBlock">
+                @HelpContent
+            </Div>
+        </TabPanel>
+    }
+</TabsContent>
+
+@code {
+    string selectedTopMenu = "home";
+
+    [Parameter] public RenderFragment NewItemContent { get; set; }
+
+    [Parameter] public RenderFragment HomeContent { get; set; }
+
+    [Parameter] public RenderFragment ViewContent { get; set; }
+
+    [Parameter] public RenderFragment HelpContent { get; set; }
+}

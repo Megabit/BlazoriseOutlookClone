@@ -1,0 +1,16 @@
+﻿<Button Display="Display.InlineBlock" Border="Border.Is0">
+    <Span Flex="Flex.AlignItems.Center.JustifyContent.Center.NoWrap" Height="Height.Is100">
+        <Icon Name="@IconName" IconSize="IconSize.Large" IconStyle="IconStyle.Regular" TextColor="IconColor" />
+        <Span Padding="Padding.Is2.FromStart" TextWeight="TextWeight.Normal">
+            @ChildContent
+        </Span>
+    </Span>
+</Button>
+
+@code {
+    [Parameter] public object IconName { get; set; }
+
+    [Parameter] public TextColor IconColor { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}

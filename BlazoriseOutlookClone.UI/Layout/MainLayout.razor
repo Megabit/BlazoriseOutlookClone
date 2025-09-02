@@ -1,0 +1,91 @@
+﻿@using BlazoriseOutlookClone.States
+@inherits LayoutComponentBase
+
+<Div Background="Background.Primary" Flex="Flex.Default.AlignItems.Center.JustifyContent.Between" Padding="Padding.Is2" Gap="Gap.Is3">
+    <Div Display="Display.InlineFlex" Width="Width.Is100">
+        <Button Border="Border.Is0" Background="Background.Transparent" TextColor="TextColor.White">
+            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.GridDots" IconSize="IconSize.Large" />
+        </Button>
+        <Div TextSize="TextSize.Heading5" Padding="Padding.Is5.OnX">
+            <Span Flex="Flex.AlignItems.Center.JustifyContent.Center.NoWrap" Height="Height.Is100">
+                <Anchor To="mail" Title="Link to mail" TextColor="TextColor.White" TextWeight="TextWeight.SemiBold" Unstyled>Outlook</Anchor>
+            </Span>
+        </Div>
+        <Div Margin="Margin.Is5.FromStart" Width="Width.Is25">
+            <TextEdit Role="TextRole.Search" Placeholder="Search" Width="Width.Max100" />
+        </Div>
+    </Div>
+    <Div Display="Display.InlineFlex" Gap="Gap.Is2">
+        <Button Border="Border.Is0" Background="Background.Transparent" TextColor="TextColor.White" Clicked="@ToggleTheme">
+            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.DarkTheme" IconSize="IconSize.Large" />
+        </Button>
+        <Button Border="Border.Is0" Background="Background.Transparent" TextColor="TextColor.White">
+            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.ChatMultiple" IconSize="IconSize.Large" />
+        </Button>
+        <Button Border="Border.Is0" Background="Background.Transparent" TextColor="TextColor.White">
+            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.CalendarEdit" IconSize="IconSize.Large" />
+        </Button>
+        <Button Border="Border.Is0" Background="Background.Transparent" TextColor="TextColor.White">
+            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.Alert" IconSize="IconSize.Large" />
+        </Button>
+        <Button Border="Border.Is0" Background="Background.Transparent" TextColor="TextColor.White">
+            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.Settings" IconSize="IconSize.Large" />
+        </Button>
+        <Div Position="Position.Relative" Width="Width.Rem( 2 )" Height="Height.Rem( 2 )" Flex="Flex.AlignItems.Center.JustifyContent.Center.Shrink.Is0">
+            <Image Fluid Source="_content/BlazoriseOutlookClone.UI/avatar01.jpg" Border="Border.RoundedCircle" />
+        </Div>
+    </Div>
+</Div>
+<Layout Sider>
+    <LayoutSider Background="Background.Transparent">
+        <LayoutSiderContent Shadow="Shadow.Small" Padding="Padding.Is1" Flex="Flex.Column.AlignItems.Start" Width="Width.Rem( 3 )">
+            <Tabs @bind-SelectedTab="@ApplicationState.CurrentPage" Flex="Flex.Column.AlignItems.Start" TabPosition="TabPosition.Start">
+                <Items>
+                    <Tab Name="mail" Clicked="@(() => ChangePage( "mail" ))">
+                        <Icon Name="IconName.Mail" IconSize="IconSize.Large" />
+                    </Tab>
+                    <Tab Name="calendar" Clicked="@(() => ChangePage( "calendar" ))">
+                        <Icon Name="IconName.Calendar" IconSize="IconSize.Large" />
+                    </Tab>
+                    <Tab Name="people" Clicked="@(() => ChangePage( "people" ))">
+                        <Tooltip Text="People">
+                            <Icon Name="IconName.Users" IconSize="IconSize.Large" />
+                        </Tooltip>
+                    </Tab>
+                    <Tab Name="todo" Clicked="@(() => ChangePage( "todo" ))">
+                        <Icon Name="IconName.Check" IconSize="IconSize.Large" />
+                    </Tab>
+                </Items>
+            </Tabs>
+        </LayoutSiderContent>
+    </LayoutSider>
+    <Layout>
+        <LayoutContent Margin="Margin.Is2">
+            @Body
+        </LayoutContent>
+    </Layout>
+</Layout>
+@code {
+    string selectedTopMenu = "home";
+    string selectedSideMenu = "mail";
+
+    async Task ToggleTheme()
+    {
+        await JSRuntime.InvokeVoidAsync( "toggleTheme" );
+    }
+
+    Task ChangePage( string page )
+    {
+        ApplicationState.ChangePage( page );
+
+        NavigationManager.NavigateTo( $"/{page}" );
+
+        return Task.CompletedTask;
+    }
+
+    [Inject] private IJSRuntime JSRuntime { get; set; }
+
+    [Inject] private NavigationManager NavigationManager { get; set; }
+
+    [CascadingParameter] private ApplicationState ApplicationState { get; set; }
+}

@@ -1,0 +1,17 @@
+﻿@using BlazoriseOutlookClone.States
+@using Microsoft.AspNetCore.Components.Routing
+<CascadingValue Value="@appState">
+    <Router AppAssembly="typeof( Pages.Home ).Assembly">
+        <Found Context="routeData">
+            <RouteView RouteData="routeData" DefaultLayout="typeof( Layout.MainLayout )" />
+            <FocusOnNavigate RouteData="routeData" Selector="h1" />
+        </Found>
+    </Router>
+</CascadingValue>
+@code {
+    ApplicationState appState = new ApplicationState
+    {
+        CurrentPage = "mail",
+        CurrentFolder = "inbox",
+    };
+}

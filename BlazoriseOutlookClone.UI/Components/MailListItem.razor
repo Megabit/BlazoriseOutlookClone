@@ -1,0 +1,50 @@
+﻿<ListGroupItem Flex="Flex.Default.NoWrap" Name="@Key" Color="@ItemColor" @onclick="@Clicked" Style="cursor: pointer;">
+    <Div Style="opacity: 0.8;" Width="Width.Rem( 2 )" Height="Height.Rem( 2 )" Border="Border.RoundedCircle" Flex="Flex.AlignItems.Center.JustifyContent.Center.Shrink.Is0" Background="@InitialsBackground" TextColor="TextColor.White" TextWeight="TextWeight.SemiBold">
+        @FromInitials
+    </Div>
+    <Div Flex="Flex.Column.NoWrap" Overflow="Overflow.Hidden" Padding="Padding.Is2.FromStart">
+        <Div>
+            @FromName
+        </Div>
+        <Div>
+            <Span TextWeight="@(!IsRead ? TextWeight.Bold : TextWeight.Default)" TextColor="@(!IsRead ? TextColor.Primary : null)">
+                @Subject
+            </Span>
+        </Div>
+        <Div TextColor="TextColor.Muted" TextSize="TextSize.Small">
+            <Span Overflow="Overflow.Hidden" TextOverflow="TextOverflow.Truncate">
+                @ChildContent
+            </Span>
+        </Div>
+    </Div>
+</ListGroupItem>
+@code {
+    string FromInitials => string.IsNullOrWhiteSpace( FromName ) ? "?" : new string( FromName.Split( ' ', StringSplitOptions.RemoveEmptyEntries ).Select( x => x[0] ).Take( 2 ).ToArray() ).ToUpperInvariant();
+
+    Background InitialsBackground => FromInitials switch
+    {
+        "A" or "B" or "C" or "D" or "E" or "F" => Background.Danger,
+        "G" or "H" or "I" or "J" or "K" or "L" => Background.Warning,
+        "M" or "N" or "O" or "P" or "Q" or "R" => Background.Success,
+        "S" or "T" or "U" or "V" or "W" => Background.Info,
+        _ => Background.Primary,
+    };
+
+    Color ItemColor => Key == SelectedMailKey ? Color.Primary : Color.Default;
+
+    [CascadingParameter] public string SelectedMailKey { get; set; }
+
+    [Parameter] public string Key { get; set; }
+
+    [Parameter] public string FromName { get; set; }
+
+    [Parameter] public string FromEmail { get; set; }
+
+    [Parameter] public string Subject { get; set; }
+
+    [Parameter] public bool IsRead { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    [Parameter] public EventCallback Clicked { get; set; }
+}

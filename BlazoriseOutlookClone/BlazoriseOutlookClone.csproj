@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazorise.Components" Version="1.8.1" />
+    <PackageReference Include="Blazorise.FluentUI2" Version="1.8.1" />
+    <PackageReference Include="Blazorise.Splitter" Version="1.8.1" />
+    <PackageReference Include="Blazorise.Icons.FluentUI" Version="1.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazoriseOutlookClone.UI\BlazoriseOutlookClone.UI.csproj" />
+  </ItemGroup>
+
+</Project>
