@@ -1,7 +1,7 @@
 ﻿@using BlazoriseOutlookClone.States
 @using Microsoft.AspNetCore.Components.Routing
 <CascadingValue Value="@appState">
-    <Router AppAssembly="typeof( Pages.Home ).Assembly">
+    <Router AppAssembly="typeof( Pages.MailsPage ).Assembly">
         <Found Context="routeData">
             <RouteView RouteData="routeData" DefaultLayout="typeof( Layout.MainLayout )" />
             <FocusOnNavigate RouteData="routeData" Selector="h1" />
