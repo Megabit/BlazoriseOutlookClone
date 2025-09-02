@@ -31,7 +31,7 @@ cd BlazoriseOutlookClone
 dotnet restore
 ```
 
-### 2. Run the project
+### 3. Run the project
 
 ```bash
 dotnet run
@@ -68,5 +68,5 @@ This project is provided “as is” without warranty of any kind. The authors a
 
 ## Acknowledgments
 
-[Blazorise](https://blazorise.com) - the UI framework powering this project
-[Fluent UI](https://developer.microsoft.com/en-us/fluentui#/) - design system inspiration
+- [Blazorise](https://blazorise.com) - the UI framework powering this project
+- [Fluent UI](https://developer.microsoft.com/en-us/fluentui#/) - design system inspiration
