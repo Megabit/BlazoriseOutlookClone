@@ -15,5 +15,5 @@
       ]
     }
   },
- "postCreateCommand": "dotnet restore && dotnet dev-certs https --trust"
+ "postCreateCommand": "dotnet restore && dotnet dev-certs https"
 }
