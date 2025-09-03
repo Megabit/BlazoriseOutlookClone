@@ -100,16 +100,7 @@
                 </Div>
             </CardBody>
             <CardBody>
-                <ListGroup Flush Overflow="Overflow.Scroll" Height="Height.Px( 750 )" SelectedItem="@selectedMailKey" Mode="ListGroupMode.Static" SelectionMode="ListGroupSelectionMode.Single">
-                    <CascadingValue Value="@selectedMailKey">
-                        @foreach ( var mail in mails )
-                        {
-                            <MailListItem @key="@mail.Key" Clicked="@(() => OnSelectedMailChanged( mail.Key ))" Key="@mail.Key" FromName="@mail.FromName" FromEmail="@mail.FromEmail" Subject="@mail.Subject" IsRead="@mail.IsRead">
-                                @mail.Body
-                            </MailListItem>
-                        }
-                    </CascadingValue>
-                </ListGroup>
+                <MailList Mails="@mails" MailKeySelected="@OnMailKeySelected" />
             </CardBody>
         </Card>
     </Column>
@@ -153,7 +144,7 @@
         return Task.CompletedTask;
     }
 
-    Task OnSelectedMailChanged( string key )
+    Task OnMailKeySelected( string key )
     {
         currentViewMode = ViewMode.Detail;
         selectedMailKey = key;

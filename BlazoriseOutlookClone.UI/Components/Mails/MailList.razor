@@ -1,0 +1,25 @@
+﻿<ListGroup Flush Overflow="Overflow.Scroll" Height="Height.Px( 750 )" SelectedItem="@selectedMailKey" Mode="ListGroupMode.Static" SelectionMode="ListGroupSelectionMode.Single">
+    <CascadingValue Value="@selectedMailKey">
+        @foreach ( var mail in Mails )
+        {
+            <MailListItem @key="@mail.Key" Clicked="@(() => OnMailItemClicked( mail.Key ))" Key="@mail.Key" FromName="@mail.FromName" FromEmail="@mail.FromEmail" Subject="@mail.Subject" IsRead="@mail.IsRead">
+                @mail.Body
+            </MailListItem>
+        }
+    </CascadingValue>
+</ListGroup>
+
+@code {
+    string selectedMailKey;
+
+    Task OnMailItemClicked( string key )
+    {
+        selectedMailKey = key;
+
+        return MailKeySelected.InvokeAsync( selectedMailKey );
+    }
+
+    [Parameter] public EventCallback<string> MailKeySelected { get; set; }
+
+    [Parameter] public IEnumerable<MailInfo> Mails { get; set; }
+}
