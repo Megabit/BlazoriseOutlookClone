@@ -1,0 +1,55 @@
+﻿<Card Margin="Margin.Is2.FromBottom">
+    <CardBody Flex="Flex.Default.JustifyContent.Start.AlignItems.Start" Gap="Gap.Is4">
+        <Div Width="Width.Rem( 6 )" Height="Height.Rem( 6 )" Border="Border.RoundedCircle" Flex="Flex.AlignItems.Center.JustifyContent.Center.Shrink.Is0" Background="@InitialsBackground" TextSize="TextSize.Heading1" TextColor="TextColor.White" TextWeight="TextWeight.SemiBold">
+            @Initials
+        </Div>
+        <Heading Size="HeadingSize.Is1">@Contact?.FirstName @Contact?.LastName</Heading>
+    </CardBody>
+    <CardBody>
+        <Tabs @bind-SelectedTab="@selectedTab">
+            <Items>
+                <Tab Name="overview">Overview</Tab>
+                <Tab Name="contact">Contact</Tab>
+                <Tab Name="files">Files</Tab>
+                <Tab Name="messages">Messages</Tab>
+                <Tab Name="linkedin">LinkedIn</Tab>
+            </Items>
+            <Content>
+                <TabPanel Name="overview" Padding="Padding.Is3">
+                    @* <ContactOverview Contact="Contact" /> *@
+                </TabPanel>
+                <TabPanel Name="contact" Padding="Padding.Is3">
+                    @* <ContactDetails Contact="Contact" /> *@
+                </TabPanel>
+                <TabPanel Name="files" Padding="Padding.Is3">
+                    @* <ContactFiles Contact="Contact" /> *@
+                </TabPanel>
+                <TabPanel Name="messages" Padding="Padding.Is3">
+                    @* <ContactMessages Contact="Contact" /> *@
+                </TabPanel>
+                <TabPanel Name="linkedin" Padding="Padding.Is3">
+                    @* <ContactLinkedIn Contact="Contact" /> *@
+                </TabPanel>
+            </Content>
+        </Tabs>
+    </CardBody>
+</Card>
+
+@code {
+    string Initials => string.IsNullOrWhiteSpace( Contact?.FirstName ) && string.IsNullOrWhiteSpace( Contact?.LastName )
+        ? "?"
+        : new string( $"{Contact?.FirstName} {Contact?.LastName}".Split( ' ', StringSplitOptions.RemoveEmptyEntries ).Select( x => x[0] ).Take( 2 ).ToArray() ).ToUpperInvariant();
+
+    Background InitialsBackground => Initials switch
+    {
+        "A" or "B" or "C" or "D" or "E" or "F" => Background.Danger,
+        "G" or "H" or "I" or "J" or "K" or "L" => Background.Warning,
+        "M" or "N" or "O" or "P" or "Q" or "R" => Background.Success,
+        "S" or "T" or "U" or "V" or "W" => Background.Info,
+        _ => Background.Primary,
+    };
+
+    string selectedTab = "overview";
+
+    [Parameter] public ContactInfo Contact { get; set; }
+}

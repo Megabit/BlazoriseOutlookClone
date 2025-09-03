@@ -1,4 +1,5 @@
 ﻿@page "/people"
+@implements IDisposable
 <Row>
     <Column>
         <TopBarMenu>
@@ -65,18 +66,55 @@
                 </Div>
             </CardBody>
             <CardBody Padding="Padding.Is0">
-               <ContactList Contacts="contacts" />
+               <ContactList Contacts="contacts" ContactKeySelected="@OnContactKeySelected" />
             </CardBody>
         </Card>
     </Column>
     <Column ColumnSize="@(ApplicationState.SidebarVisible ? ColumnSize.Is7 : ColumnSize.Is9)" Padding="Padding.Is2.OnY.Is2.FromStart">
-        
+        @if ( selectedContact != null  )
+        {
+            <ContactRead Contact="@selectedContact"  />
+        }
+        else
+        {
+            <Div Flex="Flex.Default.AlignItems.Center.JustifyContent.Center" Height="Height.Px( 800 )" TextColor="TextColor.Muted" TextSize="TextSize.Large">
+                Select contact to read
+            </Div>
+        }
     </Column>
 </Row>
 @code{
     [CascadingParameter] private ApplicationState ApplicationState { get; set; }
 
-     List<ContactInfo> contacts = new List<ContactInfo>
+    ContactInfo selectedContact;
+    string selectedContactKey;
+
+    Task OnContactKeySelected( string key )
+    {
+        selectedContactKey = key;
+        selectedContact = contacts.FirstOrDefault( x => x.Key == selectedContactKey );
+
+        return Task.CompletedTask;
+    }
+
+    protected override void OnInitialized()
+    {
+        ApplicationState.SidebarVisibilityChanged += OnSidebarVisibilityChanged;
+
+        base.OnInitialized();
+    }
+
+    public void Dispose()
+    {
+        ApplicationState.SidebarVisibilityChanged -= OnSidebarVisibilityChanged;
+    }
+
+    private void OnSidebarVisibilityChanged( bool visible )
+    {
+        InvokeAsync( StateHasChanged );
+    }
+
+    List<ContactInfo> contacts = new List<ContactInfo>
     {
         new ContactInfo
         {
