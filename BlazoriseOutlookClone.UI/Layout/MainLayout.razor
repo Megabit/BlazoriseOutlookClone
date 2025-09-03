@@ -42,18 +42,16 @@
             <Tabs @bind-SelectedTab="@ApplicationState.CurrentPage" Flex="Flex.Column.AlignItems.Start" TabPosition="TabPosition.Start">
                 <Items>
                     <Tab Name="mail" Clicked="@(() => ChangePage( "mail" ))">
-                        <Icon Name="IconName.Mail" IconSize="IconSize.Large" />
+                        <Image Source="_content/BlazoriseOutlookClone.UI/img/MailIcon.svg" Width="Width.Px( 20 )" Height="Height.Px( 20 )" />
                     </Tab>
                     <Tab Name="calendar" Clicked="@(() => ChangePage( "calendar" ))">
-                        <Icon Name="IconName.Calendar" IconSize="IconSize.Large" />
+                        <Image Source="_content/BlazoriseOutlookClone.UI/img/CalendarIcon.svg" Width="Width.Px( 20 )" Height="Height.Px( 20 )" />
                     </Tab>
                     <Tab Name="people" Clicked="@(() => ChangePage( "people" ))">
-                        <Tooltip Text="People">
-                            <Icon Name="IconName.Users" IconSize="IconSize.Large" />
-                        </Tooltip>
+                        <Image Source="_content/BlazoriseOutlookClone.UI/img/PeopleIcon.svg" Width="Width.Px( 20 )" Height="Height.Px( 20 )" />
                     </Tab>
                     <Tab Name="todo" Clicked="@(() => ChangePage( "todo" ))">
-                        <Icon Name="IconName.Check" IconSize="IconSize.Large" />
+                        <Image Source="_content/BlazoriseOutlookClone.UI/img/TodoIcon.png" Width="Width.Px( 20 )" Height="Height.Px( 20 )" />
                     </Tab>
                 </Items>
             </Tabs>
