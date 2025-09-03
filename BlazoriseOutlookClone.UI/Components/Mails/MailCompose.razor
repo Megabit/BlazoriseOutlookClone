@@ -1,0 +1,48 @@
+﻿<Card>
+    <CardBody Border="Border.Is1.OnBottom" Flex="Flex.Default.JustifyContent.Between.AlignItems.Center.NoWrap">
+        <Div>
+            <Dropdown RightAligned>
+                <Button Color="Color.Primary" Display="Display.InlineBlock">
+                    <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.Send" IconStyle="IconStyle.Regular" Margin="Margin.Is2" />
+                    <Span>Send</Span>
+                </Button>
+                <DropdownToggle Color="Color.Primary" Split />
+                <DropdownMenu>
+                    <DropdownItem>
+                        Send
+                    </DropdownItem>
+                    <DropdownItem>
+                        Schedule send
+                    </DropdownItem>
+                    <DropdownItem>
+                        Start mail merge
+                    </DropdownItem>
+                </DropdownMenu>
+            </Dropdown>
+        </Div>
+        <Div>
+            <Button Border="Border.Is0">
+                <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.Delete" IconStyle="IconStyle.Regular" IconSize="IconSize.Large" />
+            </Button>
+            <Button Border="Border.Is0">
+                <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.WindowNew" IconStyle="IconStyle.Regular" IconSize="IconSize.Large" />
+            </Button>
+        </Div>
+    </CardBody>
+    <CardBody Border="Border.Is1.OnBottom">
+        <Field Flex="Flex.Default.NoWrap" Gap="Gap.Is3">
+            <Button>To</Button>
+            <TextEdit />
+        </Field>
+        <Field Flex="Flex.Default.NoWrap" Gap="Gap.Is3">
+            <Button>Cc</Button>
+            <TextEdit />
+        </Field>
+        <Field Flex="Flex.Default.NoWrap" Margin="Margin.Is0.FromBottom">
+            <TextEdit Placeholder="Add a subject" />
+        </Field>
+    </CardBody>
+    <CardBody Height="Height.Px( 600 )">
+        <RichTextEdit Theme="RichTextEditTheme.Snow" SubmitOnEnter="false" Height="Height.Is100" />
+    </CardBody>
+</Card>

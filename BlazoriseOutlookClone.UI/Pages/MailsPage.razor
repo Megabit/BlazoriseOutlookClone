@@ -6,7 +6,7 @@
         <TopBarMenu>
             <NewItemContent>
                 <Dropdown RightAligned>
-                    <Button Color="Color.Primary" Display="Display.InlineBlock">
+                    <Button Color="Color.Primary" Display="Display.InlineBlock" Clicked="@OnNewMailClicked">
                         <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.Add" IconStyle="IconStyle.Regular" Margin="Margin.Is2" />
                         <Span>New mail</Span>
                     </Button>
@@ -50,7 +50,7 @@
     </Column>
 </Row>
 <Row>
-    <Column ColumnSize="ColumnSize.Is2" Flex="Flex.Column">
+    <Column ColumnSize="ColumnSize.Is2" Flex="Flex.Column" Padding="Padding.Is2.OnY">
         <SideBarMenu>
             <SideBarGroup Caption="Favorites">
                 @foreach ( var folder in folders.Where( x => x.Favorite ) )
@@ -69,23 +69,54 @@
             </SideBarGroup>
         </SideBarMenu>
     </Column>
-    <Column ColumnSize="ColumnSize.Is3">
-        <ListGroup Flush Overflow="Overflow.Scroll" Height="Height.Px( 750 )" SelectedItem="@selectedMailKey" SelectedItemChanged="@OnSelectedMailChanged" Mode="ListGroupMode.Static" SelectionMode="ListGroupSelectionMode.Single">
-            <CascadingValue Value="@selectedMailKey">
-                @foreach ( var mail in mails )
-                {
-                    <MailListItem @key="@mail.Key" Clicked="@(() => OnSelectedMailChanged( mail.Key ))" Key="@mail.Key" FromName="@mail.FromName" FromEmail="@mail.FromEmail" Subject="@mail.Subject" IsRead="@mail.IsRead">
-                        @mail.Body
-                    </MailListItem>
-                }
-            </CascadingValue>
-        </ListGroup>
+    <Column ColumnSize="ColumnSize.Is3" Padding="Padding.Is2.OnY.Is2.FromEnd">
+        <Card>
+            <CardBody Border="Border.Is1.OnBottom" Flex="Flex.Default.JustifyContent.Between.AlignItems.Center" Height="Height.Rem( 3 )">
+                <Div>
+                    <Tabs SelectedTab="focused">
+                        <Items>
+                            <Tab Name="focused">Focused</Tab>
+                            <Tab Name="other">Other</Tab>
+                        </Items>
+                    </Tabs>
+                </Div>
+                <Div>
+                    <Button Border="Border.Is0" Padding="Padding.Is2.OnX">
+                        <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.SelectAllOff" IconStyle="IconStyle.Regular" IconSize="IconSize.Large" />
+                    </Button>
+                    <Button Border="Border.Is0" Padding="Padding.Is2.OnX">
+                        <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowCurveDownLeft" IconStyle="IconStyle.Regular" IconSize="IconSize.Large" />
+                    </Button>
+                    <Button Border="Border.Is0" Padding="Padding.Is2.OnX">
+                        <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.Filter" IconStyle="IconStyle.Regular" IconSize="IconSize.Large" />
+                    </Button>
+                    <Button Border="Border.Is0" Padding="Padding.Is2.OnX">
+                        <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowSort" IconStyle="IconStyle.Regular" IconSize="IconSize.Large" />
+                    </Button>
+                </Div>
+            </CardBody>
+            <CardBody>
+                <ListGroup Flush Overflow="Overflow.Scroll" Height="Height.Px( 750 )" SelectedItem="@selectedMailKey" SelectedItemChanged="@OnSelectedMailChanged" Mode="ListGroupMode.Static" SelectionMode="ListGroupSelectionMode.Single">
+                    <CascadingValue Value="@selectedMailKey">
+                        @foreach ( var mail in mails )
+                        {
+                            <MailListItem @key="@mail.Key" Clicked="@(() => OnSelectedMailChanged( mail.Key ))" Key="@mail.Key" FromName="@mail.FromName" FromEmail="@mail.FromEmail" Subject="@mail.Subject" IsRead="@mail.IsRead">
+                                @mail.Body
+                            </MailListItem>
+                        }
+                    </CascadingValue>
+                </ListGroup>
+            </CardBody>
+        </Card>
     </Column>
-    <Column ColumnSize="ColumnSize.Is7">
-        @if ( selectedMail != null )
+    <Column ColumnSize="ColumnSize.Is7" Padding="Padding.Is2.OnY.Is2.FromStart">
+        @if ( selectedMail != null && currentViewMode == ViewMode.Detail )
         {
-            <MailDetail FromName="@selectedMail.FromName" FromEmail="@selectedMail.FromEmail" Subject="@selectedMail.Subject" Body="@selectedMail.Body" IsRead="@selectedMail.IsRead">
-            </MailDetail>
+            <MailRead FromName="@selectedMail.FromName" FromEmail="@selectedMail.FromEmail" Subject="@selectedMail.Subject" Body="@selectedMail.Body" IsRead="@selectedMail.IsRead" />
+        }
+        else if ( selectedMail == null && currentViewMode == ViewMode.Compose )
+        {
+            <MailCompose />
         }
         else
         {
@@ -99,9 +130,26 @@
 @code {
     MailInfo selectedMail;
     string selectedMailKey;
+    ViewMode currentViewMode = ViewMode.Detail;
+
+    enum ViewMode
+    {
+        Detail,
+        Compose
+    }
+
+    Task OnNewMailClicked()
+    {
+        currentViewMode = ViewMode.Compose;
+        selectedMailKey = null;
+        selectedMail = null;
+
+        return Task.CompletedTask;
+    }
 
     Task OnSelectedMailChanged( string key )
     {
+        currentViewMode = ViewMode.Detail;
         selectedMailKey = key;
         selectedMail = mails.FirstOrDefault( x => x.Key == selectedMailKey );
 
