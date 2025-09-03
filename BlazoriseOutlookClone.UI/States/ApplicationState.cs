@@ -18,7 +18,14 @@ public record ApplicationState
 
     public string CurrentFolder { get; set; }
 
-    public void ChangePage( string page ) => CurrentPage = page;
+    public void ChangePage( string page )
+    {
+        CurrentPage = page;
+
+        SidebarVisible = true;
+
+        SidebarVisibilityChanged?.Invoke( SidebarVisible );
+    }
 
     public event Action<bool> SidebarVisibilityChanged;
 

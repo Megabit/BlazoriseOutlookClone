@@ -1,4 +1,5 @@
 ﻿@page "/calendar"
+@implements IDisposable
 <Row>
     <Column>
         <TopBarMenu>
@@ -51,19 +52,21 @@
     </Column>
 </Row>
 <Row>
-    <Column ColumnSize="ColumnSize.Is2" Flex="Flex.Column">
-        <Div Flex="Flex.Column">
-            <SideBarMenu>
-                <SideBarGroup Caption="My calendars">
-                    <SideBarCheck Name="Calendar" />
-                    <SideBarCheck Name="United States holidays" />
-                    <SideBarCheck Name="Birthdays" />
-                </SideBarGroup>
-            </SideBarMenu>
-        </Div>
-        @* <DatePicker TValue="DateTime?" Inline /> *@
-    </Column>
-    <Column>
+    @if ( ApplicationState.SidebarVisible )
+    {
+        <Column ColumnSize="ColumnSize.Is2" Flex="Flex.Column" Padding="Padding.Is2.OnY">
+            <Div Flex="Flex.Column">
+                <SideBarMenu>
+                    <SideBarGroup Caption="My calendars">
+                        <SideBarCheck Name="Calendar" />
+                        <SideBarCheck Name="United States holidays" />
+                        <SideBarCheck Name="Birthdays" />
+                    </SideBarGroup>
+                </SideBarMenu>
+            </Div>
+        </Column>
+    }
+    <Column Padding="Padding.Is2.OnY">
         <Scheduler TItem="Appointment" @bind-Date="@selectedDate"
                    Data="@Appointments"
                    @bind-SelectedView="@selectedView">
@@ -124,3 +127,23 @@
         }
     </Column>
 </Row>
+@code {
+    [CascadingParameter] private ApplicationState ApplicationState { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ApplicationState.SidebarVisibilityChanged += OnSidebarVisibilityChanged;
+
+        base.OnInitialized();
+    }
+
+    public void Dispose()
+    {
+        ApplicationState.SidebarVisibilityChanged -= OnSidebarVisibilityChanged;
+    }
+
+    private void OnSidebarVisibilityChanged( bool visible )
+    {
+        InvokeAsync( StateHasChanged );
+    }
+}
