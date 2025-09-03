@@ -3,23 +3,22 @@
         @FromInitials
     </Div>
     <Div Flex="Flex.Column.NoWrap" Overflow="Overflow.Hidden" Padding="Padding.Is2.FromStart">
-        <Div>
-            @FromName
+        <Div Flex="Flex.Default">
+            @FirstName @LastName
         </Div>
-        <Div>
-            <Span TextWeight="@(!IsRead ? TextWeight.Bold : TextWeight.Default)" TextColor="@(!IsRead ? TextColor.Primary : null)">
-                @Subject
-            </Span>
-        </Div>
-        <Div TextColor="TextColor.Muted" TextSize="TextSize.Small">
-            <Span Overflow="Overflow.Hidden" TextOverflow="TextOverflow.Truncate">
-                @ChildContent
-            </Span>
-        </Div>
+        @if ( Company != null )
+        {
+            <Div Flex="Flex.Default">
+                <Span TextColor="TextColor.Muted" TextSize="TextSize.Small">
+                    @Company
+                </Span>
+            </Div>
+        }
     </Div>
 </ListGroupItem>
+
 @code {
-    string FromInitials => string.IsNullOrWhiteSpace( FromName ) ? "?" : new string( FromName.Split( ' ', StringSplitOptions.RemoveEmptyEntries ).Select( x => x[0] ).Take( 2 ).ToArray() ).ToUpperInvariant();
+    string FromInitials => string.IsNullOrWhiteSpace( FirstName ) && string.IsNullOrWhiteSpace( LastName ) ? "?" : new string( ( FirstName?.FirstOrDefault().ToString() ?? "" ) + ( LastName?.FirstOrDefault().ToString() ?? "" ) ).ToUpperInvariant();
 
     Background InitialsBackground => FromInitials switch
     {
@@ -30,19 +29,17 @@
         _ => Background.Primary,
     };
 
-    Color ItemColor => Key == SelectedMailKey ? Color.Primary : Color.Default;
+    Color ItemColor => Key == SelectedContactKey ? Color.Primary : Color.Default;
 
-    [CascadingParameter( Name = "SelectedMailKey" )] public string SelectedMailKey { get; set; }
+    [CascadingParameter( Name = "SelectedContactKey" )] public string SelectedContactKey { get; set; }
 
     [Parameter] public string Key { get; set; }
 
-    [Parameter] public string FromName { get; set; }
+    [Parameter] public string FirstName { get; set; }
 
-    [Parameter] public string FromEmail { get; set; }
+    [Parameter] public string LastName { get; set; }
 
-    [Parameter] public string Subject { get; set; }
-
-    [Parameter] public bool IsRead { get; set; }
+    [Parameter] public string Company { get; set; }
 
     [Parameter] public RenderFragment ChildContent { get; set; }
 

@@ -1,0 +1,23 @@
+﻿<ListGroup Flush Overflow="Overflow.Scroll" Height="Height.Px( 750 )" SelectedItem="@selectedContactKey" Mode="ListGroupMode.Static" SelectionMode="ListGroupSelectionMode.Single">
+    <CascadingValue Value="@selectedContactKey" Name="SelectedContactKey">
+        @foreach ( var contact in Contacts )
+        {
+            <ContactListItem @key="@contact.Key" Clicked="@(() => OnContactItemClicked( contact.Key ))" Key="@contact.Key" FirstName="@contact.FirstName" LastName="@contact.LastName" Company="@contact.Company" />
+        }
+    </CascadingValue>
+</ListGroup>
+
+@code {
+    string selectedContactKey;
+
+    Task OnContactItemClicked( string key )
+    {
+        selectedContactKey = key;
+
+        return ContactKeySelected.InvokeAsync( selectedContactKey );
+    }
+
+    [Parameter] public EventCallback<string> ContactKeySelected { get; set; }
+
+    [Parameter] public IEnumerable<ContactInfo> Contacts { get; set; }
+}

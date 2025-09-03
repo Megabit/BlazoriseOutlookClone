@@ -8,7 +8,7 @@
             <NewItemContent>
                 <Dropdown RightAligned>
                     <Button Color="Color.Primary" Display="Display.InlineBlock" Clicked="@OnNewMailClicked">
-                        <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.Add" IconStyle="IconStyle.Regular" Margin="Margin.Is2" />
+                        <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.MailAdd" IconStyle="IconStyle.Regular" Margin="Margin.Is2" />
                         <Span>New mail</Span>
                     </Button>
                     <DropdownToggle Color="Color.Primary" Split />
@@ -99,7 +99,7 @@
                     </Button>
                 </Div>
             </CardBody>
-            <CardBody>
+            <CardBody Padding="Padding.Is0">
                 <MailList Mails="@mails" MailKeySelected="@OnMailKeySelected" />
             </CardBody>
         </Card>
