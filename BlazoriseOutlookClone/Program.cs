@@ -2,6 +2,7 @@ using Blazorise;
 using Blazorise.FluentUI2;
 using Blazorise.Icons.FluentUI;
 using Blazorise.RichTextEdit;
+using BlazoriseOutlookClone.Data;
 using BlazoriseOutlookClone.UI;
 
 namespace BlazoriseOutlookClone
@@ -21,6 +22,10 @@ namespace BlazoriseOutlookClone
                 .AddFluentUI2Providers()
                 .AddFluentUIIcons()
                 .AddBlazoriseRichTextEdit();
+
+            builder.Services.AddScoped<MailService>();
+            builder.Services.AddScoped<FolderService>();
+            builder.Services.AddScoped<ContactService>();
 
             var app = builder.Build();
 

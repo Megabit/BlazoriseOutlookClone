@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BlazoriseOutlookClone.Data\BlazoriseOutlookClone.Data.csproj" />
     <ProjectReference Include="..\BlazoriseOutlookClone.Models\BlazoriseOutlookClone.Models.csproj" />
   </ItemGroup>
 
