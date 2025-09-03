@@ -1,9 +1,7 @@
 ﻿<Div Flex="Flex.Default.JustifyContent.Start.AlignItems.Center" Height="Height.Rem( 2 )">
-    <Div Padding="Padding.Is3" Display="Display.InlineBlock">
-        <Span Flex="Flex.AlignItems.Center.JustifyContent.Center.NoWrap" Height="Height.Is100">
-            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.NavigationFilled" IconSize="IconSize.Large" />
-        </Span>
-    </Div>
+    <Button Border="Border.Is0" Clicked="@(() => ApplicationState.ToggleSidebar())">
+        <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.NavigationFilled" IconStyle="IconStyle.Regular" IconSize="IconSize.Large" />
+    </Button>
     <Tabs @bind-SelectedTab="@selectedTopMenu">
         <Items>
             @if ( HomeContent != null )
@@ -62,4 +60,6 @@
     [Parameter] public RenderFragment ViewContent { get; set; }
 
     [Parameter] public RenderFragment HelpContent { get; set; }
+
+    [CascadingParameter] private ApplicationState ApplicationState { get; set; }
 }

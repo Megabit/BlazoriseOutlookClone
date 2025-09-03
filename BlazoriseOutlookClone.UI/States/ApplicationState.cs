@@ -1,8 +1,10 @@
-﻿namespace BlazoriseOutlookClone.States;
+﻿using System;
+
+namespace BlazoriseOutlookClone.States;
 
 public record ApplicationState
 {
-    public bool IsSidebarCollapsed { get; set; }
+    public bool SidebarVisible { get; set; } = true;
 
     public string Title { get; set; }
 
@@ -17,4 +19,13 @@ public record ApplicationState
     public string CurrentFolder { get; set; }
 
     public void ChangePage( string page ) => CurrentPage = page;
+
+    public event Action<bool> SidebarVisibilityChanged;
+
+    public void ToggleSidebar()
+    {
+        SidebarVisible = !SidebarVisible;
+
+        SidebarVisibilityChanged?.Invoke( SidebarVisible );
+    }
 }

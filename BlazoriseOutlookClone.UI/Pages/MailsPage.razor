@@ -1,6 +1,7 @@
 ﻿@page "/"
 @page "/mail"
 @using BlazoriseOutlookClone.Models
+@implements IDisposable
 <Row>
     <Column>
         <TopBarMenu>
@@ -50,25 +51,28 @@
     </Column>
 </Row>
 <Row>
-    <Column ColumnSize="ColumnSize.Is2" Flex="Flex.Column" Padding="Padding.Is2.OnY">
-        <SideBarMenu>
-            <SideBarGroup Caption="Favorites">
-                @foreach ( var folder in folders.Where( x => x.Favorite ) )
-                {
-                    <SideBarButton IconName="@folder.IconName" Name="@folder.Name" UnreadCount="@folder.UnreadCount" />
-                }
-            </SideBarGroup>
-        </SideBarMenu>
+    @if ( ApplicationState.SidebarVisible )
+    {
+        <Column ColumnSize="ColumnSize.Is2" Flex="Flex.Column" Padding="Padding.Is2.OnY">
+            <SideBarMenu>
+                <SideBarGroup Caption="Favorites">
+                    @foreach ( var folder in folders.Where( x => x.Favorite ) )
+                    {
+                        <SideBarButton IconName="@folder.IconName" Name="@folder.Name" UnreadCount="@folder.UnreadCount" />
+                    }
+                </SideBarGroup>
+            </SideBarMenu>
 
-        <SideBarMenu>
-            <SideBarGroup Caption="John Doe">
-                @foreach ( var folder in folders )
-                {
-                    <SideBarButton IconName="@folder.IconName" Name="@folder.Name" UnreadCount="@folder.UnreadCount" />
-                }
-            </SideBarGroup>
-        </SideBarMenu>
-    </Column>
+            <SideBarMenu>
+                <SideBarGroup Caption="John Doe">
+                    @foreach ( var folder in folders )
+                    {
+                        <SideBarButton IconName="@folder.IconName" Name="@folder.Name" UnreadCount="@folder.UnreadCount" />
+                    }
+                </SideBarGroup>
+            </SideBarMenu>
+        </Column>
+    }
     <Column ColumnSize="ColumnSize.Is3" Padding="Padding.Is2.OnY.Is2.FromEnd">
         <Card>
             <CardBody Border="Border.Is1.OnBottom" Flex="Flex.Default.JustifyContent.Between.AlignItems.Center" Height="Height.Rem( 3 )">
@@ -109,7 +113,7 @@
             </CardBody>
         </Card>
     </Column>
-    <Column ColumnSize="ColumnSize.Is7" Padding="Padding.Is2.OnY.Is2.FromStart">
+    <Column ColumnSize="@(ApplicationState.SidebarVisible ? ColumnSize.Is7 : ColumnSize.Is9)" Padding="Padding.Is2.OnY.Is2.FromStart">
         @if ( selectedMail != null && currentViewMode == ViewMode.Detail )
         {
             <MailRead FromName="@selectedMail.FromName" FromEmail="@selectedMail.FromEmail" Subject="@selectedMail.Subject" Body="@selectedMail.Body" IsRead="@selectedMail.IsRead" />
@@ -128,6 +132,8 @@
 </Row>
 
 @code {
+    [CascadingParameter] private ApplicationState ApplicationState { get; set; }
+
     MailInfo selectedMail;
     string selectedMailKey;
     ViewMode currentViewMode = ViewMode.Detail;
@@ -154,6 +160,23 @@
         selectedMail = mails.FirstOrDefault( x => x.Key == selectedMailKey );
 
         return Task.CompletedTask;
+    }
+
+    protected override void OnInitialized()
+    {
+        ApplicationState.SidebarVisibilityChanged += OnSidebarVisibilityChanged;
+
+        base.OnInitialized();
+    }
+
+    public void Dispose()
+    {
+        ApplicationState.SidebarVisibilityChanged -= OnSidebarVisibilityChanged;
+    }
+
+    private void OnSidebarVisibilityChanged( bool visible )
+    {
+        InvokeAsync( StateHasChanged );
     }
 
     List<FolderInfo> folders = new List<FolderInfo>
