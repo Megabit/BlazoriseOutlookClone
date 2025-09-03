@@ -96,7 +96,7 @@
                 </Div>
             </CardBody>
             <CardBody>
-                <ListGroup Flush Overflow="Overflow.Scroll" Height="Height.Px( 750 )" SelectedItem="@selectedMailKey" SelectedItemChanged="@OnSelectedMailChanged" Mode="ListGroupMode.Static" SelectionMode="ListGroupSelectionMode.Single">
+                <ListGroup Flush Overflow="Overflow.Scroll" Height="Height.Px( 750 )" SelectedItem="@selectedMailKey" Mode="ListGroupMode.Static" SelectionMode="ListGroupSelectionMode.Single">
                     <CascadingValue Value="@selectedMailKey">
                         @foreach ( var mail in mails )
                         {
