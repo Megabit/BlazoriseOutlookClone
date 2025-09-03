@@ -545,3 +545,7 @@ html[data-theme="dark"] {
         border-radius: var(--borderRadiusLarge);
         box-shadow: var(--shadow4);
     }
+
+.avatar-menu > .fui-MenuList {
+    width: 100%;
+}
