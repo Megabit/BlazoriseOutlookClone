@@ -1,0 +1,16 @@
+﻿<Button Border="Border.Is0" Padding="Padding.Is2.OnX" Clicked="@Clicked">
+    <Icon Name="@IconName" IconStyle="IconStyle.Regular" IconSize="IconSize.Large" TextColor="@IconColor" />
+    @if ( ChildContent != null )
+    {
+        <Span>@ChildContent</Span>
+    }
+</Button>
+@code {
+    [Parameter] public object IconName { get; set; }
+
+    [Parameter] public TextColor IconColor { get; set; }
+
+    [Parameter] public EventCallback Clicked { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}
