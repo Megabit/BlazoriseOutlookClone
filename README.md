@@ -16,6 +16,12 @@ The goal is to showcase how far you can take Blazorise components and theming to
 
 ---
 
+## Example
+
+<img width="1903" height="922" alt="image" src="https://github.com/user-attachments/assets/0ca637c5-0e97-4ea3-9e2a-0f5558fd84b6" />
+
+---
+
 ## 🚀 Getting Started
 
 ### 1. Clone the repo
