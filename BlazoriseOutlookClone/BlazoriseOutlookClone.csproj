@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazorise.Components" Version="1.8.1" />
-    <PackageReference Include="Blazorise.FluentUI2" Version="1.8.1" />
-    <PackageReference Include="Blazorise.Splitter" Version="1.8.1" />
-    <PackageReference Include="Blazorise.Icons.FluentUI" Version="1.8.1" />
+    <PackageReference Include="Blazorise.Components" Version="1.8.2" />
+    <PackageReference Include="Blazorise.FluentUI2" Version="1.8.2" />
+    <PackageReference Include="Blazorise.Splitter" Version="1.8.2" />
+    <PackageReference Include="Blazorise.Icons.FluentUI" Version="1.8.2" />
   </ItemGroup>
 
   <ItemGroup>
