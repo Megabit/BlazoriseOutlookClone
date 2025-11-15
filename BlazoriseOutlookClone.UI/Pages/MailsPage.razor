@@ -6,13 +6,13 @@
     <Column>
         <TopBarMenu>
             <NewItemContent>
-                <Dropdown RightAligned>
-                    <Button Color="Color.Primary" Display="Display.InlineBlock" Clicked="@OnNewMailClicked">
+                <Dropdown DropdownMenuTargetId="new-mail-button">
+                    <Button ElementId="new-mail-button" Color="Color.Primary" Display="Display.InlineBlock" Clicked="@OnNewMailClicked">
                         <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.MailAdd" IconStyle="IconStyle.Regular" Margin="Margin.Is2" />
                         <Span>New mail</Span>
                     </Button>
                     <DropdownToggle Color="Color.Primary" Split />
-                    <DropdownMenu>
+                    <DropdownMenu >
                         <DropdownItem>
                             <Icon Name="IconName.MailOpen" IconSize="IconSize.Large" />
                             Mail
