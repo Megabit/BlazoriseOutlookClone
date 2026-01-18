@@ -4,7 +4,7 @@ namespace BlazoriseOutlookClone.Data;
 
 public class FolderService
 {
-    List<FolderInfo> folders = new List<FolderInfo>
+    private readonly List<FolderInfo> folders = new()
     {
         new FolderInfo { Key = Guid.NewGuid().ToString(), Name = "Inbox", UnreadCount = 17, IconName = Blazorise.Icons.FluentUI.FluentUIIcons.MailInbox, Favorite = true },
         new FolderInfo { Key = Guid.NewGuid().ToString(), Name = "Sent Items" ,  IconName = Blazorise.Icons.FluentUI.FluentUIIcons.Send, Favorite = true},
@@ -17,8 +17,5 @@ public class FolderService
         new FolderInfo { Key = Guid.NewGuid().ToString(), Name = "Search Folders" , IconName = Blazorise.Icons.FluentUI.FluentUIIcons.FolderSearch,},
     };
 
-    public List<FolderInfo> GetAllFolders()
-    {
-        return folders;
-    }
+    public IReadOnlyList<FolderInfo> GetAllFolders() => folders;
 }

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlazoriseOutlookClone.Models;
+﻿using BlazoriseOutlookClone.Models;
 
 namespace BlazoriseOutlookClone.Data;
 
 public class ContactService
 {
-    List<ContactInfo> contacts = new List<ContactInfo>
+    private readonly List<ContactInfo> contacts = new()
     {
         new ContactInfo
         {
@@ -133,8 +128,5 @@ public class ContactService
         }
     };
 
-    public List<ContactInfo> GetAllContacts()
-    {
-        return contacts;
-    }
+    public IReadOnlyList<ContactInfo> GetAllContacts() => contacts;
 }

@@ -6,6 +6,13 @@
             <RouteView RouteData="routeData" DefaultLayout="typeof( Layout.MainLayout )" />
             <FocusOnNavigate RouteData="routeData" Selector="h1" />
         </Found>
+        <NotFound>
+            <LayoutView Layout="typeof( Layout.MainLayout )">
+                <Div Flex="Flex.Default.AlignItems.Center.JustifyContent.Center" Height="Height.Px( 600 )" TextColor="TextColor.Muted" TextSize="TextSize.Large">
+                    Page not found
+                </Div>
+            </LayoutView>
+        </NotFound>
     </Router>
 </CascadingValue>
 

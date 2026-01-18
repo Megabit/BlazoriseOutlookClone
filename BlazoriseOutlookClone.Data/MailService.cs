@@ -1,5 +1,6 @@
-﻿using BlazoriseOutlookClone.Data;
-using BlazoriseOutlookClone.Models;
+﻿using BlazoriseOutlookClone.Models;
+
+namespace BlazoriseOutlookClone.Data;
 
 public class MailService
 {
@@ -78,9 +79,9 @@ public class MailService
                 Key = Guid.NewGuid().ToString(),
                 FolderKey = folder.Key,
                 FromName = fromName,
-                FromEmail = $"{fromName.Replace( " ", "." ).ToLower()}@{sampleDomains[random.Next( sampleDomains.Length )]}",
+                FromEmail = $"{fromName.Replace( " ", "." ).ToLowerInvariant()}@{sampleDomains[random.Next( sampleDomains.Length )]}",
                 ToName = toName,
-                ToEmail = $"{toName.Replace( " ", "." ).ToLower()}@{sampleDomains[random.Next( sampleDomains.Length )]}",
+                ToEmail = $"{toName.Replace( " ", "." ).ToLowerInvariant()}@{sampleDomains[random.Next( sampleDomains.Length )]}",
                 Subject = subject,
                 Body = body,
                 Date = DateTime.Now.AddMinutes( -random.Next( 0, 10000 ) ),
@@ -92,8 +93,8 @@ public class MailService
         }
     }
 
-    public List<MailInfo> GetAllMails() => mails;
+    public IReadOnlyList<MailInfo> GetAllMails() => mails;
 
-    public List<MailInfo> GetMailsByFolder( string folderKey ) =>
+    public IReadOnlyList<MailInfo> GetMailsByFolder( string folderKey ) =>
         mails.Where( m => m.FolderKey == folderKey ).ToList();
 }

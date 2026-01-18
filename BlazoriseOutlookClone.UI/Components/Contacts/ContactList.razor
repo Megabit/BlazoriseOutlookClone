@@ -19,5 +19,5 @@
 
     [Parameter] public EventCallback<string> ContactKeySelected { get; set; }
 
-    [Parameter] public IEnumerable<ContactInfo> Contacts { get; set; }
+    [Parameter] public IEnumerable<ContactInfo> Contacts { get; set; } = System.Array.Empty<ContactInfo>();
 }
