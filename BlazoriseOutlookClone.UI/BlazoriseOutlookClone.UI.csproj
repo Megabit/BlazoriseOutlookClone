@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
 
@@ -10,13 +10,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazorise.Components" Version="1.8.2" />
-    <PackageReference Include="Blazorise.FluentUI2" Version="1.8.2" />
-    <PackageReference Include="Blazorise.Splitter" Version="1.8.2" />
-    <PackageReference Include="Blazorise.Scheduler" Version="1.8.2" />
-    <PackageReference Include="Blazorise.RichTextEdit" Version="1.8.2" />
-    <PackageReference Include="Blazorise.Icons.FluentUI" Version="1.8.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.9" />
+    <PackageReference Include="Blazorise.Components" Version="2.1.0" />
+    <PackageReference Include="Blazorise.FluentUI2" Version="2.1.0" />
+    <PackageReference Include="Blazorise.Splitter" Version="2.1.0" />
+    <PackageReference Include="Blazorise.Scheduler" Version="2.1.0" />
+    <PackageReference Include="Blazorise.RichTextEdit" Version="2.1.0" />
+    <PackageReference Include="Blazorise.Icons.FluentUI" Version="2.1.0" />
+
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.5" />
   </ItemGroup>
 
   <ItemGroup>
