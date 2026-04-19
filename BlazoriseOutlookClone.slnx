@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="BlazoriseOutlookClone.Data/BlazoriseOutlookClone.Data.csproj" />
+  <Project Path="BlazoriseOutlookClone.Models/BlazoriseOutlookClone.Models.csproj" />
+  <Project Path="BlazoriseOutlookClone.UI/BlazoriseOutlookClone.UI.csproj" />
+  <Project Path="BlazoriseOutlookClone/BlazoriseOutlookClone.csproj" />
+</Solution>
